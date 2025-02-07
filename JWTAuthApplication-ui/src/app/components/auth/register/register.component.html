@@ -1,0 +1,27 @@
+<p-toast></p-toast>
+<div class="login-container">
+    <p-card class="login-card">
+        <h2>Sign up</h2>
+        <div class="input-field">
+            <label for="firstName">First name</label>
+            <input id="firstName" pInputText type="text" [(ngModel)]="firstName" placeholder="Enter your first name">
+        </div>
+        <div class="input-field">
+            <label for="lastName">Last name</label>
+            <input id="lastName" pInputText type="text" [(ngModel)]="lastName" placeholder="Enter your last name">
+        </div>
+        <div class="input-field">
+            <label for="email">Email</label>
+            <input id="email" pInputText type="email" [(ngModel)]="email" placeholder="Enter your email">
+        </div>
+        <div class="input-field">
+            <label for="password">Password</label>
+            <input id="password" pInputText type="password" [(ngModel)]="password" placeholder="Enter your password">
+        </div>
+        <button (click)="register()" class="login-button">Sign up!</button>
+        <p class="register-link">
+            Already has account?
+            <a routerLink="/login" routerLinkActive="active">Sign in</a>
+        </p>
+    </p-card>
+</div>

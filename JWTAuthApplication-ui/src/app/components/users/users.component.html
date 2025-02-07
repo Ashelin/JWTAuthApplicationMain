@@ -1,0 +1,71 @@
+<p-toast></p-toast>
+<p-fieldset legend="Add a new user">
+    <form (ngSubmit)="onSubmit()" class="form-container">
+        <div class="form-row">
+            <span class="p-float-label input-wrapper">
+                <input pInputText type="text" id="firstName" [(ngModel)]="newUser.firstName" name="firstName"/>
+                <label for="firstName">First Name</label>
+            </span>
+            <span class="p-float-label input-wrapper">
+                <input pInputText type="text" id="lastName" [(ngModel)]="newUser.lastName" name="lastName"/>
+                <label for="lastName">Last Name</label>
+            </span>
+            <span class="p-float-label input-wrapper">
+                <input pInputText type="email" id="email" [(ngModel)]="newUser.email" name="email"/>
+                <label for="email">Email</label>
+            </span>
+            <span class="p-float-label input-wrapper">
+                <input pInputText type="password" id="password" [(ngModel)]="newUser.password" name="password"/>
+                <label for="password">Password</label>
+            </span>
+            <button pButton type="submit" label="Create" class="p-button-success add-user-button"></button>
+        </div>
+    </form>
+</p-fieldset>
+<br>
+
+<p-fieldset legend="User list">
+    <p-table [value]="users" [paginator]="true" [rows]="5" [rowsPerPageOptions]="[5, 10, 20]">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th>Creation timestamp</th>
+                <th>Modification timestamp</th>
+                <th>Actions</th>
+            </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-user let-i="rowIndex">
+            <tr>
+                <td>
+                    <input *ngIf="editingRow === i" pInputText [(ngModel)]="user.firstName"/>
+                    <span *ngIf="editingRow !== i">{{ user.firstName }}</span>
+                </td>
+                <td>
+                    <input *ngIf="editingRow === i" pInputText [(ngModel)]="user.lastName"/>
+                    <span *ngIf="editingRow !== i">{{ user.lastName }}</span>
+                </td>
+                <td>
+                    <input *ngIf="editingRow === i" pInputText [(ngModel)]="user.email"/>
+                    <span *ngIf="editingRow !== i">{{ user.email }}</span>
+                </td>
+                <td>{{ formatDate(user.creationTimestamp) }}</td>
+                <td>{{ formatDate(user.modificationTimestamp) }}</td>
+                <td class="action-buttons">
+                    <button *ngIf="editingRow === i" pButton class="p-button-success p-button-sm" icon="pi pi-check"
+                        (click)="updateUser(user)"></button>
+                    <button *ngIf="editingRow === i" pButton class="p-button-secondary p-button-sm" icon="pi pi-times"
+                        (click)="cancelEdit()"></button>
+
+                    <button *ngIf="editingRow !== i" pButton class="p-button-warning p-button-sm" icon="pi pi-pencil"
+                        (click)="editUser(i)"></button>
+                    <button *ngIf="editingRow !== i" pButton class="p-button-danger p-button-sm" icon="pi pi-trash"
+                        (click)="confirmDelete(user)"></button>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</p-fieldset>
+<p-confirmDialog></p-confirmDialog>

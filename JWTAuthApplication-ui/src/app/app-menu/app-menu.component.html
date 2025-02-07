@@ -1,0 +1,13 @@
+<p-megaMenu [model]="menuItems" styleClass="custom-mega-menu">
+    <ng-template pTemplate="start">
+      <div class="megaMenu-content">
+        <h2>JWTAuthApp</h2>
+      </div>
+    </ng-template>
+
+    <ng-template pTemplate="end">
+      <button class="logout-button" (click)="logout()">
+        <i class="pi pi-sign-out"></i> Logout
+      </button>
+    </ng-template>
+  </p-megaMenu>

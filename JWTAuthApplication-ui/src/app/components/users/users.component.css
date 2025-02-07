@@ -1,0 +1,73 @@
+.form-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.input-wrapper {
+    flex: 1;
+    min-width: 200px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.add-user-button {
+    align-self: flex-start;
+    padding: 10px 20px;
+    margin-top: 5px;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 5px;
+    justify-content: center;
+    align-items: center;
+}
+
+.p-button-danger.p-button-sm {
+    background-color: #dc3545;
+    border: none;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+}
+
+.p-button-danger.p-button-sm:hover {
+    background-color: #c82333;
+}
+
+.p-button-danger.p-button-sm .pi {
+    font-size: 1.2rem;
+}
+
+.p-button-warning.p-button-sm {
+    background-color: #28a745;
+    border: none;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+}
+
+.p-button-warning.p-button-sm:hover {
+    background-color: #218838;
+}
+
+.p-button-warning.p-button-sm .pi {
+    font-size: 1.2rem;
+}
+
+.p-button {
+    border: none;
+    padding: 5px;
+    min-width: 32px;
+    height: 32px;
+}

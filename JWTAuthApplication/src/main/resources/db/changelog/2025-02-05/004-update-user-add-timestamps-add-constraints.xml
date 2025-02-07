@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.29.xsd"
+        objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS">
+    <changeSet id="1738790089664-1" author="Daniel Shelest">
+        <addColumn tableName="users">
+            <column name="creation_timestamp" type="DATETIME"/>
+            <column name="modification_timestamp" type="DATETIME"/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="1738790089664-3" author="Daniel Shelest">
+        <addUniqueConstraint columnNames="email" constraintName="uc_users_email" tableName="users"/>
+    </changeSet>
+
+</databaseChangeLog>

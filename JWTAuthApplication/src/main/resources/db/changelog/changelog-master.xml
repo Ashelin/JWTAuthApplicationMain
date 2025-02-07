@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.17.xsd">
+
+    <include file="db/changelog/2025-02-05/001-create-user-table.xml"/>
+    <include file="db/changelog/2025-02-05/002-update-user-add-role-and-rename-name-to-firstname.xml"/>
+    <include file="db/changelog/2025-02-05/003-update-user-rename-table-user-to-users.xml"/>
+    <include file="db/changelog/2025-02-05/004-update-user-add-timestamps-add-constraints.xml"/>
+    <include file="db/changelog/2025-02-05/005-create-token-table.xml"/>
+    <include file="db/changelog/2025-02-06/001-update-token-table-rename-to-refresh-tokens.xml"/>
+    <include file="db/changelog/2025-02-06/002-update-refresh-token-add-jti.xml"/>
+    <include file="db/changelog/2025-02-06/003-update-user-table-add-constraints.xml"/>
+
+</databaseChangeLog>
