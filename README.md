@@ -41,7 +41,7 @@ This is a Spring Boot application for authentication and authorization using JWT
     ```
 2. **Build the Spring Boot application using Maven**:
     ```bash
-    ./mvnw clean install
+    ./mvn clean install
     ```
 
 3. **Build and run the application using Docker Compose**:
