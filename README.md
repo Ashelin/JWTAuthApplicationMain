@@ -42,7 +42,7 @@ This is a Spring Boot application for authentication and authorization using JWT
 
 2. **Build and run the application using Docker Compose**:
     ```bash
-    docker-compose up --build
+    docker-compose up --build -d
     ```
 
 3. **Access the application**:
