@@ -39,13 +39,17 @@ This is a Spring Boot application for authentication and authorization using JWT
     git clone https://github.com/Ashelin/JWTAuthApplicationMain
     cd JWTAuthApplicationMain
     ```
+2. **Build the Spring Boot application using Maven**:
+    ```bash
+    ./mvnw clean install
+    ```
 
-2. **Build and run the application using Docker Compose**:
+3. **Build and run the application using Docker Compose**:
     ```bash
     docker-compose up --build -d
     ```
 
-3. **Access the application**:
+4. **Access the application**:
     - Backend API: `http://localhost:8080` or `http://localhost:80` via Nginx
     - Frontend: `http://localhost`
 
