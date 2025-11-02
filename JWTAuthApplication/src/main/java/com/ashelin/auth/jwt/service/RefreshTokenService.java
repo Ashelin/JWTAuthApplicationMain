@@ -11,11 +11,15 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -26,7 +30,7 @@ public class RefreshTokenService {
     private final RefreshTokenRepository refreshTokenRepository;
 
     public void saveUserRefreshToken(User user, String refreshToken, String jti) {
-        RefreshToken token = RefreshToken.builder()
+        RefreshToken token = Objects.requireNonNull(RefreshToken.builder()
                 .token(refreshToken)
                 .jti(jti)
                 .user(user)
@@ -34,7 +38,7 @@ public class RefreshTokenService {
                 .expiresAt(LocalDateTime.now().plusDays(7))
                 .revoked(false)
                 .expired(false)
-                .build();
+                .build());
         refreshTokenRepository.save(token);
     }
 
@@ -69,7 +73,13 @@ public class RefreshTokenService {
             storedToken.setRevoked(true);
             refreshTokenRepository.save(storedToken);
 
-            String newAccessToken = jwtService.generateToken(user);
+            Map<String, Object> extraClaims = new HashMap<>();
+            extraClaims.put("authorities", user.getAuthorities().stream()
+                    .map(GrantedAuthority::getAuthority)
+                    .toList());
+            extraClaims.put("userRole", user.getUserRole().name());
+
+            String newAccessToken = jwtService.generateToken(extraClaims, user);
             String newRefreshToken = jwtService.generateRefreshToken(user);
             String newJti = jwtService.extractClaim(newRefreshToken, claims -> claims.get("jti", String.class));
 

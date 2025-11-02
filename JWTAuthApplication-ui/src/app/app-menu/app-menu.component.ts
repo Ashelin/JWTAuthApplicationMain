@@ -14,16 +14,11 @@ import { MegaMenu } from 'primeng/megamenu';
 export class AppMenuComponent {
   menuItems: MegaMenuItem[];
 
-  constructor(private router: Router) {
+  constructor(private readonly router: Router) {
     this.menuItems = [
       { label: 'Main Page', icon: 'pi pi-home', command: () => this.navigateTo('/') },
       { label: 'Users', icon: 'pi pi-users', command: () => this.navigateTo('/users') },
-      {
-        label: 'Logout',
-        icon: 'pi pi-sign-out',
-        command: () => this.logout(),
-        styleClass: 'logout-button'
-      }
+      { label: 'Logout', icon: 'pi pi-sign-out', command: () => this.logout(), styleClass: 'logout-button'}
     ];
   }
 
