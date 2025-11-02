@@ -31,6 +31,7 @@
                 <th>First Name</th>
                 <th>Last Name</th>
                 <th>Email</th>
+                <th>Role</th>
                 <th>Creation timestamp</th>
                 <th>Modification timestamp</th>
                 <th>Actions</th>
@@ -50,6 +51,16 @@
                 <td>
                     <input *ngIf="editingRow === i" pInputText [(ngModel)]="user.email"/>
                     <span *ngIf="editingRow !== i">{{ user.email }}</span>
+                </td>
+                <td>
+                    <p-dropdown *ngIf="editingRow === i && isAdmin" 
+                                [options]="roles" 
+                                [(ngModel)]="user.userRole"
+                                placeholder="Select Role"
+                                [style]="{'width': '100%', 'min-width': '120px'}"
+                                styleClass="p-inputtext-sm">
+                    </p-dropdown>
+                    <span *ngIf="editingRow !== i || !isAdmin">{{ user.userRole }}</span>
                 </td>
                 <td>{{ formatDate(user.creationTimestamp) }}</td>
                 <td>{{ formatDate(user.modificationTimestamp) }}</td>

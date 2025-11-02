@@ -11,9 +11,13 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -59,7 +63,13 @@ public class AuthenticationService {
     private AuthenticationResponse getAuthenticationResponse(User user) {
         refreshTokenService.revokeAllUserTokens(user);
 
-        String accessToken = jwtService.generateToken(user);
+        Map<String, Object> extraClaims = new HashMap<>();
+        extraClaims.put("authorities", user.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .toList());
+        extraClaims.put("userRole", user.getUserRole().name());
+
+        String accessToken = jwtService.generateToken(extraClaims, user);
         String refreshToken = jwtService.generateRefreshToken(user);
         String jti = jwtService.extractClaim(refreshToken, claims -> claims.get("jti", String.class));
 

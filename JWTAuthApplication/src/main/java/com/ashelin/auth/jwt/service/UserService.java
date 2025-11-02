@@ -1,5 +1,6 @@
 package com.ashelin.auth.jwt.service;
 
+import com.ashelin.auth.jwt.dto.RoleUpdate;
 import com.ashelin.auth.jwt.dto.SearchUser;
 import com.ashelin.auth.jwt.dto.UserRequest;
 import com.ashelin.auth.jwt.dto.UserResponse;
@@ -71,7 +72,6 @@ public class UserService {
         assignValueFromRequestToEntityIfNotNull(userRequest.getLastName(), existingUser::setLastName);
         assignValueFromRequestToEntityIfNotNull(userRequest.getEmail(), existingUser::setEmail);
         assignValueFromRequestToEntityIfNotNull(userRequest.getPassword(), password -> existingUser.setPassword(passwordEncoder.encode(password)));
-        assignValueFromRequestToEntityIfNotNull(userRequest.getUserRole(), existingUser::setUserRole);
 
         userRepository.save(existingUser);
 
@@ -93,6 +93,20 @@ public class UserService {
         log.info("User with id:{} successfully deleted", id);
 
         return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    @Transactional
+    public ResponseEntity<Void> changeUserRole(Long id, RoleUpdate roleUpdate) {
+        if (roleUpdate == null || roleUpdate.getUserRole() == null) {
+            log.warn("Attempt to update role with null request for user id:{}", id);
+            return ResponseEntity.badRequest().build();
+        }
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException("User with id:" + id + " not found"));
+        user.setUserRole(roleUpdate.getUserRole());
+        userRepository.save(user);
+        log.info("User id:{} role updated to {}", id, roleUpdate.getUserRole());
+        return ResponseEntity.ok().build();
     }
 
     private <T> void assignValueFromRequestToEntityIfNotNull(T requestValue, Consumer<T> consumer) {

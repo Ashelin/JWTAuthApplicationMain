@@ -1,11 +1,15 @@
 package com.ashelin.auth.jwt.controller;
 
+import com.ashelin.auth.jwt.dto.AvailableRolesResponse;
+import com.ashelin.auth.jwt.dto.RoleUpdate;
 import com.ashelin.auth.jwt.dto.SearchUser;
 import com.ashelin.auth.jwt.dto.UserRequest;
 import com.ashelin.auth.jwt.dto.UserResponse;
+import com.ashelin.auth.jwt.enums.UserRole;
 import com.ashelin.auth.jwt.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -16,6 +20,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Set;
 
 @RestController
@@ -35,9 +41,24 @@ public class UserController {
         return userService.searchUsers(searchUser);
     }
 
+    @GetMapping(value = "/roles")
+    public ResponseEntity<AvailableRolesResponse> getAvailableRoles() {
+        List<UserRole> roles = Arrays.stream(UserRole.values()).toList();
+        AvailableRolesResponse response = AvailableRolesResponse.builder()
+                .roles(roles)
+                .build();
+        return ResponseEntity.ok(response);
+    }
+
     @PatchMapping(value = "/update/{id}")
     public ResponseEntity<Void> updateUser(@PathVariable Long id, @RequestBody UserRequest userRequest) {
         return userService.updateUser(id, userRequest);
+    }
+
+    @PatchMapping(value = "/role/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<Void> changeUserRole(@PathVariable Long id, @RequestBody RoleUpdate roleUpdate) {
+        return userService.changeUserRole(id, roleUpdate);
     }
 
     @DeleteMapping(value = "/delete/{id}")
